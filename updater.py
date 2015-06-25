@@ -4,7 +4,7 @@ import gzip
 import tempfile
 import sys
 import os
-import urllib2
+from urllib.request import urlopen
 from datetime import datetime
 
 homeDirPath = os.path.expanduser("~")
@@ -14,13 +14,13 @@ logFile = open(logFilePath, 'a')
 def log(s):
     dt = datetime.now()
     str = dt.strftime("%Y-%m-%d %H:%M:%S")
-    print str + "> " + s
+    print(str + "> " + s)
     logFile.write(str + "> " + s + "\n")
     logFile.flush()
     os.fsync(logFile.fileno())
 
 def download(tmpFile):
-    response = urllib2.urlopen('http://tbg.iblocklist.com/Lists/ipfilter.dat.gz')
+    response = urlopen('http://tbg.iblocklist.com/Lists/ipfilter.dat.gz')
     ipfilterDataGz = response.read()
     response.close()
 
@@ -64,4 +64,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
